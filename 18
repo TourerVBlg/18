@@ -1,0 +1,119 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class User {
+    string _name;
+    string _login;
+    string _pass;
+
+public:
+    void setName(const string& name) {
+        _name = name;
+    }
+
+    void setLogin(const string& login) {
+        _login = login;
+    }
+
+    void setPass(const string& pass) {
+        _pass = pass;
+    }
+
+    void saveToFile(const string& filename) {
+        ofstream outfile(filename);
+        if (outfile.is_open()) {
+            outfile << _name << endl;
+            outfile << _login << endl;
+            outfile << _pass << endl;
+            outfile.close();
+            cout << "User information saved to file: " << filename << endl;
+        } else {
+            cout << "Unable to open file: " << filename << endl;
+        }
+    }
+
+    void loadFromFile(const string& filename) {
+        ifstream infile(filename);
+        if (infile.is_open()) {
+            getline(infile, _name);
+            getline(infile, _login);
+            getline(infile, _pass);
+            infile.close();
+            cout << "User information loaded from file: " << filename << endl;
+        } else {
+            cout << "Unable to open file: " << filename << endl;
+        }
+    }
+};
+
+class Message {
+    string _text;
+    string _sender;
+    string _receiver;
+
+public:
+    void setText(const string& text) {
+        _text = text;
+    }
+
+    void setSender(const string& sender) {
+        _sender = sender;
+    }
+
+    void setReceiver(const string& receiver) {
+        _receiver = receiver;
+    }
+
+    void saveToFile(const string& filename) {
+        ofstream outfile(filename);
+        if (outfile.is_open()) {
+            outfile << _text << endl;
+            outfile << _sender << endl;
+            outfile << _receiver << endl;
+            outfile.close();
+            cout << "Message information saved to file: " << filename << endl;
+        } else {
+            cout << "Unable to open file: " << filename << endl;
+        }
+    }
+
+    void loadFromFile(const string& filename) {
+        ifstream infile(filename);
+        if (infile.is_open()) {
+            getline(infile, _text);
+            getline(infile, _sender);
+            getline(infile, _receiver);
+            infile.close();
+            cout << "Message information loaded from file: " << filename << endl;
+        } else {
+            cout << "Unable to open file: " << filename << endl;
+        }
+    }
+};
+
+int main() {
+    User user;
+    Message message;
+
+    // Установка данных для объектов классов User и Message
+    user.setName("John Doe");
+    user.setLogin("johndoe");
+    user.setPass("password");
+    
+    message.setText("Hello, world!");
+    message.setSender("johndoe");
+    message.setReceiver("janedoe");
+
+    // Сохранение данных объектов в файлы
+    user.saveToFile("user.txt");
+    message.saveToFile("message.txt");
+
+    // Загрузка данных из файлов
+    user.loadFromFile("user.txt");
+    message.loadFromFile("message.txt");
+
+    return 0;
+}
